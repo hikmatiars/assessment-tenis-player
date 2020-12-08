@@ -1,8 +1,8 @@
 package router
 
 import (
+	"assessment-tennis-player/http/api"
 	"context"
-	"core-project/http/api"
 	"encoding/json"
 	"github.com/gorilla/mux"
 	"net/http"
@@ -17,6 +17,8 @@ func NewHttpServer(ctx context.Context, apiHandler *api.Handler) http.Handler {
 			"ok": true,
 		})
 	})
+
+	route.HandleFunc("/api/put-ball", apiHandler.PostBallTennisHandler).Methods("GET")
 
 	return route
 }
