@@ -3,8 +3,12 @@ package usecase
 import (
 	"assessment-tennis-player/http/response"
 	"context"
-	"github.com/labstack/gommon/log"
 	"math/rand"
+)
+
+var (
+	SetContainer = 5
+	BallReady = 5
 )
 
 //Init Use case interface
@@ -27,10 +31,6 @@ func NewUseCase(ctx context.Context, data []*response.DataContainer, flag int) I
 }
 
 func (uc *UseCase) PutBallToContainerUseCase() []*response.DataContainer {
-	var (
-		setContainer = 5
-		ballReady = 5
-	)
 
 	//Using Flag if player ready to play
 	if uc.FlagReady == 1 {
@@ -39,7 +39,7 @@ func (uc *UseCase) PutBallToContainerUseCase() []*response.DataContainer {
 
 	if len(uc.Data) == 0 {
 		//Insert data if container empty
-		for i := 1; i <= setContainer; i ++   {
+		for i := 1; i <= SetContainer; i ++   {
 			uc.Data = append(uc.Data, &response.DataContainer{
 				ContainerId: i,
 				Ball: 0,
@@ -52,8 +52,7 @@ func (uc *UseCase) PutBallToContainerUseCase() []*response.DataContainer {
 		n := Random(len(uc.Data))
 
 		ball := uc.Data[n].Ball + 1
-		log.Print(ball)
-		if ball == ballReady {
+		if ball == BallReady {
 			//set to ready
 			uc.Data[n].Ball = ball
 			uc.Data[n].Status = "ready"
